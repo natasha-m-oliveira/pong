@@ -1,6 +1,25 @@
-move_bounce_solid(true);
+// 1. Força a bola a ir para a esquerda
+hspeed = -abs(hspeed);
 
+// 2. Checa se aconteceu o "Sanduíche" com a parede
+if (place_meeting(x, y, obj_collider)) {
+    // Teleporta a bola bem para a frente da raquete
+    x = other.bbox_left - (sprite_width / 2) - 2; 
+    
+    // Força o ângulo de fuga diagonal para o meio de campo
+    if (y < room_height / 2) {
+        direction = 225; // Diagonal para baixo e esquerda
+    } else {
+        direction = 135; // Diagonal para cima e esquerda
+    }
+} else {
+    // Colisão normal no meio do campo: apenas ejeta da raquete
+    x = other.bbox_left - (sprite_width / 2) - 1;
+}
+
+// 3. Incrementa a velocidade da bola
 speed += speed_increase;
 
+// 4. Adiciona o som de boing
 audio_stop_sound(snd_boing);
 audio_play_sound(snd_boing, 1, false);
