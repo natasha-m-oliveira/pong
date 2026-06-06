@@ -1,0 +1,1 @@
+global.is_multiplayer = !global.is_multiplayer;
